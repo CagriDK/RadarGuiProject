@@ -1,8 +1,10 @@
 #include <iostream>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
-#include "imGui/imgui_impl_opengl3.h"
+#include "imgui_impl_opengl3.h"
+#include <GLEW/glew.h> // Will drag system OpenGL headers
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
+
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -13,19 +15,39 @@ int main(int, char**){
 
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
-        return 1;
+        {return 1;}
+
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear!!! ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "Dear!!! ImGui GLFW+OpenGL3 example", nullptr, nullptr);
     if (window == nullptr)
         return 1;
+
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
+    if(glewInit() != GLEW_OK)
+    {
+        std::cout<< "Error! " << std::endl;
+    }
+
+    std::cout<<glGetString(GL_VERSION) <<std::endl;
+
+
     while (!glfwWindowShouldClose(window))
     {
-        glfwPollEvents();
+        glClear(!glfwWindowShouldClose(window));
+
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-0.5f,-0.5f);
+        glVertex2f( 0.0f, 0.5f);
+        glVertex2f( 0.5f,-0.5f);
+        glEnd();
+
+
         glfwSwapBuffers(window);
+
+        glfwPollEvents();
     }
     glfwDestroyWindow(window);
     glfwTerminate();
