@@ -1,10 +1,7 @@
 #include <iostream>
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include <GLEW/glew.h> // Will drag system OpenGL headers
-#include <GLFW/glfw3.h> // Will drag system OpenGL headers
-
+#include "MainMenuPage.h"
+#include "GuiManager.h"
+#include <string>
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -13,51 +10,52 @@ static void glfw_error_callback(int error, const char* description)
 
 int main(int, char**){
 
+    MainMenuPage* mainMenuPage = new MainMenuPage();
+    GuiManager guiManager;
+    guiManager.AddPage(mainMenuPage,std::string{"MainPage"});
+    guiManager.SetActivePage(std::string{"MainPage"});
+
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         {return 1;}
 
-
-    // Create window with graphics context
     GLFWwindow* window = glfwCreateWindow(640, 480, "Dear!!! ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+
     if (window == nullptr)
-        return 1;
+        {return 1;}
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
-    if(glewInit() != GLEW_OK)
-    {
-        std::cout<< "Error! " << std::endl;
+    if (glewInit() != GLEW_OK) {
+    std::cerr << "Failed to initialize GLEW: " << glewGetErrorString(glewInit()) << std::endl;
     }
 
-    std::cout<<glGetString(GL_VERSION) <<std::endl;
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 
-    float positions[6] = {
-        -0.5f,-0.5f, //First Vertex
-        0.0f, 0.5f, //Second Vertex
-        0.5f,-0.5f //Third Vertex
-    };
-
-    unsigned int buffer;
-    glGenBuffers(1,&buffer);
-    glBindBuffer(GL_ARRAY_BUFFER,buffer);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(positions),positions,GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
-    
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && !mainMenuPage->ShouldClose())
     {
         glClear(!glfwWindowShouldClose(window));
 
         glDrawArrays(GL_TRIANGLES,0,3);
 
+        guiManager.RenderActivePage();
+
         glfwSwapBuffers(window);
 
         glfwPollEvents();
     }
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    delete mainMenuPage;
+    
 }

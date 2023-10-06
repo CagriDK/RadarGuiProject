@@ -8,7 +8,7 @@ add_definitions(-DGLEW_STATIC)  # Add GLEW_STATIC preprocessor definition
 
 # Create a list of source files
 file(GLOB_RECURSE CPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
-file(GLOB_RECURSE IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/source/imGui/*.cpp)
+file(GLOB_RECURSE IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/src/imGui/*.cpp)
 
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
