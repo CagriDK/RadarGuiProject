@@ -1,14 +1,13 @@
 #include <iostream>
 #include "MainMenuPage.h"
 #include "GuiManager.h"
-#include <string>
+#include "Tools.h"
 
-static void glfw_error_callback(int error, const char* description)
+int main(int, char**)
 {
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
-}
 
-int main(int, char**){
+    ZipFile("TestMe1.txt","TestFileZip.zip");
+    ZipDirectory("TestFolderToZip","TestDirectoryZip.zip");
 
     MainMenuPage* mainMenuPage = new MainMenuPage();
     GuiManager guiManager;
@@ -57,5 +56,6 @@ int main(int, char**){
     glfwTerminate();
 
     delete mainMenuPage;
-    
+
+    return 0;
 }
