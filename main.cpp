@@ -18,7 +18,7 @@ int main(int, char**)
     if (!glfwInit())
         {return 1;}
 
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Dear!!! ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "Hello IMGUI", nullptr, nullptr);
 
     if (window == nullptr)
         {return 1;}
@@ -38,8 +38,6 @@ int main(int, char**)
     while (!glfwWindowShouldClose(window) && !mainMenuPage->ShouldClose())
     {
         glClear(!glfwWindowShouldClose(window));
-
-        glDrawArrays(GL_TRIANGLES,0,3);
 
         guiManager.RenderActivePage();
 

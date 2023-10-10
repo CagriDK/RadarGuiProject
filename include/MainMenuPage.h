@@ -32,7 +32,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
-        if (ImGui::Begin("Main Menu")) {
+        if (ImGui::Begin("Main Menu",NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize)) {
             if (ImGui::Button("Start Game")) {
                 // Oyunu başlatma kodları...
             }
@@ -40,7 +40,8 @@ public:
                 // Ayarlar sayfasını açma kodları...
             }
             if (ImGui::Button("Exit")) {
-                // Oyunu kapatma kodları...
+                std::cout<<"Program kapatılıyor...\n";
+                std::exit(-1);
             }
             ImGui::End();
         }
