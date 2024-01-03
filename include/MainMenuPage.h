@@ -10,16 +10,16 @@ private:
 
 public:
     void Init() override {
-        m_Positions[0] = -0.5f; m_Positions[1] = -0.5f;
-        m_Positions[2] = 0.0f;  m_Positions[3] = 0.5f;
-        m_Positions[4] = 0.5f;  m_Positions[5] = -0.5f;
+        // m_Positions[0] = -0.5f; m_Positions[1] = -0.5f;
+        // m_Positions[2] = 0.0f;  m_Positions[3] = 0.5f;
+        // m_Positions[4] = 0.5f;  m_Positions[5] = -0.5f;
 
-        glGenBuffers(1, &m_Buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_Buffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(m_Positions), m_Positions, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        // glGenBuffers(1, &m_Buffer);
+        // glBindBuffer(GL_ARRAY_BUFFER, m_Buffer);
+        // glBufferData(GL_ARRAY_BUFFER, sizeof(m_Positions), m_Positions, GL_STATIC_DRAW);
+        // glEnableVertexAttribArray(0);
+        // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+        // glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     void Update() override {
@@ -28,25 +28,24 @@ public:
     }
 
     void Render() override {
-        std::cout<<"Job Started;";
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         if (ImGui::Begin("Main Menu",NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize)) {
             if (ImGui::Button("Start Game")) {
+                std::cout<<"Game is starting...\n";
                 // Oyunu başlatma kodları...
             }
             if (ImGui::Button("Settings")) {
+                std::cout<<"Settings page opening...\n";
                 // Ayarlar sayfasını açma kodları...
             }
             if (ImGui::Button("Exit")) {
-                std::cout<<"Program kapatılıyor...\n";
+                std::cout<<"Program closing...\n";
                 std::exit(-1);
             }
             ImGui::End();
         }
-
-        std::cout<<"Job finished;";
     }
 
     void Terminate() override {

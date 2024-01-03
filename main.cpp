@@ -1,14 +1,9 @@
 #include <iostream>
 #include "MainMenuPage.h"
 #include "GuiManager.h"
-#include "Tools.h"
 
 int main(int, char**)
 {
-
-    ZipFile("TestMe1.txt","TestFileZip.zip");
-    ZipDirectory("TestFolderToZip","TestDirectoryZip.zip");
-
     MainMenuPage* mainMenuPage = new MainMenuPage();
     GuiManager guiManager;
     guiManager.AddPage(mainMenuPage,std::string{"MainPage"});
