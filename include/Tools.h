@@ -18,6 +18,12 @@
     GET(Type, MemberName, FaceName)        \
     SET(Type, MemberName, FaceName)
 
+#ifdef _WIN32
+#include <Windows.h>
+#elif defined(__unix__) || defined(__unix) || defined(unix) || defined(__linux__)
+#include <X11/Xlib.h>
+#endif
+
 #include <iostream>
 #include <fstream>
 #include <string>
