@@ -2,6 +2,7 @@
 
 #include "GuiPage.h"
 #include "AppConfig.h"
+#include "ClientApi.h"
 
 class MainMenuPage : public GuiPage
 {
@@ -12,6 +13,8 @@ private:
     uint16_t m_serverPort = 0;
     char windowTitle[256];
     std::vector<Config::UDPIPPort> m_udp_addres;
+    ClientApi *clntApi = nullptr;
+    std::thread *m_thread = nullptr;
 
 public:
     void Init() override
@@ -25,6 +28,26 @@ public:
             memcpy(&temp, &idx, sizeof(Config::UDPIPPort));
             m_udp_addres.push_back(temp);
         }
+
+        clntApi = new ClientApi("127.0.0.1", 55000);
+        m_thread = new std::thread([this]() {
+            while (true)
+            {
+                if (clntApi->getConnectionStatus())
+                {
+                    std::cout << "Connected to server"
+                              << "\n";
+                    break;
+                }
+                else
+                {
+                    std::cout << "Waiting for connection"
+                              << "\n";
+                    clntApi->ConnectServer();
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+        });
     }
 
     void Update() override
@@ -90,8 +113,8 @@ public:
                     ImVec2 buttonSize = ImVec2(fullWidth, 0);
                     if (ImGui::Button("Send", buttonSize))
                     {
-                        std::cout << "Message Sended"
-                                  << "\n";
+                        json jData;
+                        clntApi->sendJsonMessage(jData,"RadarMessage");
                     }
                     ImGui::EndGroup();
 
@@ -108,6 +131,7 @@ public:
     void Terminate() override
     {
         glDeleteBuffers(1, &m_Buffer);
+        m_thread->join();
     }
 
     bool ShouldClose() override

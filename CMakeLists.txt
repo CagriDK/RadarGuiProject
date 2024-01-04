@@ -14,6 +14,17 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include/imGui)
 
+if(UNIX)
+    set(Boost_INCLUDE_DIR "/home/ua/boost_1_71_0")
+    set(Boost_LIBRARY_DIR "/home/ua/boost_1_71_0/stage/lib")
+    set(Boost_ROOT "/home/ua/boost_1_71_0")
+endif()
+
+find_package(Boost)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+set(Boost_USE_STATIC_LIBS ON)
+
 add_executable(RadarGuiProject main.cpp ${CPP_SOURCES} ${IMGUI_SOURCES})
 
 # Add the path to the GLFW library
@@ -25,6 +36,8 @@ ${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/libglfw3.a
 ${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/opengl32.dll
 ${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/glew32s.lib 
 ${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/glew32s.lib 
+${Boost_LIBRARIES}
+Ws2_32
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
