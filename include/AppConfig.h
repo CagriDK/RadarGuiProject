@@ -8,6 +8,9 @@ public:
     {
         std::string ip;
         int port;
+        bool trackPlot;
+        bool radarPlot;
+        int multiInstance;
     };
 
 public:

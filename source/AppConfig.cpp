@@ -99,6 +99,9 @@ bool Config::checkControlAndSetArray(fieldArray &valArray, const json &jData, co
                     UDPIPPort temp;
                     temp.ip = val[subField_1];
                     temp.port = val[subField_2];
+                    temp.trackPlot = false;
+                    temp.radarPlot = false;
+                    temp.multiInstance = 1;
                     valArray.push_back(temp);
                 }
             }
