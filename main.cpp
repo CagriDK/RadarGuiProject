@@ -7,6 +7,7 @@ int main(int, char**)
     MainMenuPage* mainMenuPage = new MainMenuPage();
     GuiManager guiManager;
     guiManager.AddPage(mainMenuPage,std::string{"MainPage"});
+    mainMenuPage->Init();
     guiManager.SetActivePage(std::string{"MainPage"});
 
     glfwSetErrorCallback(glfw_error_callback);

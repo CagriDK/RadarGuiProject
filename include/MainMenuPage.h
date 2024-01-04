@@ -1,58 +1,67 @@
 #pragma once
 
 #include "GuiPage.h"
+#include "AppConfig.h"
 
-class MainMenuPage : public GuiPage {
+class MainMenuPage : public GuiPage
+{
+
 private:
     unsigned int m_Buffer;
     float m_Positions[6];
     bool m_ShouldClose = false; // Sayfanın kapanıp kapanmadığını kontrol etmek için bir bool değişken
+    uint16_t m_serverPort = 0;
+    std::vector<Config::UDPIPPort> m_udp_addres;
 
 public:
-    void Init() override {
-        // m_Positions[0] = -0.5f; m_Positions[1] = -0.5f;
-        // m_Positions[2] = 0.0f;  m_Positions[3] = 0.5f;
-        // m_Positions[4] = 0.5f;  m_Positions[5] = -0.5f;
-
-        // glGenBuffers(1, &m_Buffer);
-        // glBindBuffer(GL_ARRAY_BUFFER, m_Buffer);
-        // glBufferData(GL_ARRAY_BUFFER, sizeof(m_Positions), m_Positions, GL_STATIC_DRAW);
-        // glEnableVertexAttribArray(0);
-        // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-        // glBindBuffer(GL_ARRAY_BUFFER, 0);
+    void Init() override
+    {
+        Config &config = Config::getInstance();
+        m_serverPort = config.getServerPort();
+        std::copy(config.getUDPRadarIPPort().begin(), config.getUDPRadarIPPort().end(), m_udp_addres.begin());
     }
 
-    void Update() override {
+    void Update() override
+    {
         // Her karede gerçekleştirilmesi gereken güncelleme işlemleri bu fonksiyon içinde yapılır.
         // Örneğin: animasyonları güncellemek, kullanıcı girdilerini işlemek vb.
     }
 
-    void Render() override {
+    void Render() override
+    {
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        
-        if (ImGui::Begin("Main Menu",NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize)) {
-            if (ImGui::Button("Start Game")) {
-                std::cout<<"Game is starting...\n";
+
+        if (ImGui::Begin("Main Menu", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
+        {
+            if (ImGui::Button("Start Game"))
+            {
+                std::cout << "Game is starting...\n";
+                std::cout << "Server port: " << m_serverPort << "\n";
+
                 // Oyunu başlatma kodları...
             }
-            if (ImGui::Button("Settings")) {
-                std::cout<<"Settings page opening...\n";
+            if (ImGui::Button("Settings"))
+            {
+                std::cout << "Settings page opening...\n";
                 // Ayarlar sayfasını açma kodları...
             }
-            if (ImGui::Button("Exit")) {
-                std::cout<<"Program closing...\n";
+            if (ImGui::Button("Exit"))
+            {
+                std::cout << "Program closing...\n";
                 std::exit(-1);
             }
             ImGui::End();
         }
     }
 
-    void Terminate() override {
+    void Terminate() override
+    {
         glDeleteBuffers(1, &m_Buffer);
     }
 
-    bool ShouldClose() override {
+    bool ShouldClose() override
+    {
         return m_ShouldClose;
     }
 };
