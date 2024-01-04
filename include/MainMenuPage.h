@@ -37,7 +37,7 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (ImGui::Begin("Radar Central Panel", NULL, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove)) //
+        if (ImGui::Begin("Radar Central Panel", NULL, ImGuiWindowFlags_MenuBar  | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove )) 
         {
             if (ImGui::BeginMenuBar())
             {
