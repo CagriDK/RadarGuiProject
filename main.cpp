@@ -14,7 +14,7 @@ int main(int, char**)
     if (!glfwInit())
         {return 1;}
 
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Hello IMGUI", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "Radar Kontrol Arayuz", nullptr, nullptr);
 
     if (window == nullptr)
         {return 1;}
@@ -22,14 +22,16 @@ int main(int, char**)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
-    if (glewInit() != GLEW_OK) {
-    std::cerr << "Failed to initialize GLEW: " << glewGetErrorString(glewInit()) << std::endl;
-    }
-
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
+
+    #ifdef _WIN32
     ImGui_ImplOpenGL3_Init("#version 330");
+    #elif defined(__unix__) || defined(__unix) || defined(unix) || defined(__linux__)
+    ImGui_ImplOpenGL3_Init("#version 140");
+    #endif
+    
 
     while (!glfwWindowShouldClose(window) && !mainMenuPage->ShouldClose())
     {

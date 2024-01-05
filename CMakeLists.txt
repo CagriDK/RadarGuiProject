@@ -25,20 +25,38 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 set(Boost_USE_STATIC_LIBS ON)
 
+
 add_executable(RadarGuiProject main.cpp ${CPP_SOURCES} ${IMGUI_SOURCES})
 
 # Add the path to the GLFW library
 #libglfw3.a OpenGL libs
 #opengl32.dll Windows System 
-#glew32s.lib GLEW build and get from GLEW  
-target_link_libraries(RadarGuiProject PRIVATE 
-${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/libglfw3.a  
+if(WIN32)
+target_link_libraries(RadarGuiProject PRIVATE  
+${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/libglfw3.a
 ${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/opengl32.dll
-${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/glew32s.lib 
-${CMAKE_CURRENT_LIST_DIR}/Dependencies/lib/glew32s.lib 
 ${Boost_LIBRARIES}
 Ws2_32
 )
+endif()
+if(UNIX)
+    target_link_libraries(RadarGuiProject PRIVATE  
+    ${Boost_LIBRARIES}
+    pthread
+    dl
+    )
+
+    find_package(glfw3 REQUIRED)
+    if(glfw3_FOUND)
+        target_link_libraries(RadarGuiProject PRIVATE glfw)
+    endif()
+
+    find_package(OpenGL REQUIRED)
+    if(OpenGL_FOUND)
+        target_link_libraries(RadarGuiProject PRIVATE ${OPENGL_LIBRARIES})
+    endif()
+endif()
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

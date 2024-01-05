@@ -8,7 +8,6 @@ class MainMenuPage : public GuiPage
 {
 
 private:
-    unsigned int m_Buffer;
     bool m_ShouldClose = false; // Sayfanın kapanıp kapanmadığını kontrol etmek için bir bool değişken
     uint16_t m_serverPort = 0;
     char windowTitle[256];
@@ -24,9 +23,9 @@ public:
         int i = 0;
         for (auto idx : config.getUDPRadarIPPort())
         {
-            Config::UDPIPPort temp;
-            memcpy(&temp, &idx, sizeof(Config::UDPIPPort));
-            m_udp_addres.push_back(temp);
+            //Config::UDPIPPort temp;
+            //memcpy(&temp, &idx, sizeof(Config::UDPIPPort));
+            m_udp_addres.push_back(idx);
         }
 
         clntApi = new ClientApi("127.0.0.1", 55000);
@@ -130,7 +129,6 @@ public:
 
     void Terminate() override
     {
-        glDeleteBuffers(1, &m_Buffer);
         m_thread->join();
     }
 

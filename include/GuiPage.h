@@ -4,7 +4,6 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <GLEW/glew.h> // Will drag system OpenGL headers
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 #include <string>
 
