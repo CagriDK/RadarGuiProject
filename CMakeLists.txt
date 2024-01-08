@@ -4,8 +4,6 @@ project(RadarGuiProject VERSION 0.1.0 LANGUAGES C CXX)
 include(CTest)
 enable_testing()
 
-add_definitions(-DGLEW_STATIC)  # Add GLEW_STATIC preprocessor definition
-
 # Create a list of source files
 file(GLOB_RECURSE CPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB_RECURSE IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/src/imGui/*.cpp)
@@ -13,12 +11,6 @@ file(GLOB_RECURSE IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/src/imG
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include/imGui)
-
-if(UNIX)
-    set(Boost_INCLUDE_DIR "/home/ua/boost_1_71_0")
-    set(Boost_LIBRARY_DIR "/home/ua/boost_1_71_0/stage/lib")
-    set(Boost_ROOT "/home/ua/boost_1_71_0")
-endif()
 
 find_package(Boost)
 include_directories(${Boost_INCLUDE_DIRS})

@@ -1,14 +1,14 @@
 #include <iostream>
-#include "MainMenuPage.h"
+#include "RadarMenuPage.h"
 #include "GuiManager.h"
 
 int main(int, char**)
 {
-    MainMenuPage* mainMenuPage = new MainMenuPage();
+    RadarMenuPage* mainMenuPage = new RadarMenuPage();
     GuiManager guiManager;
-    guiManager.AddPage(mainMenuPage,std::string{"MainPage"});
+    guiManager.AddPage(mainMenuPage,std::string{"Radar Control Interface"});
     mainMenuPage->Init();
-    guiManager.SetActivePage(std::string{"MainPage"});
+    guiManager.SetActivePage(std::string{"Radar Control Interface"});
 
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
