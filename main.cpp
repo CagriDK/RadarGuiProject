@@ -44,14 +44,12 @@ int main(int, char**)
         glfwPollEvents();
     }
 
-    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();                                                                                                                                                                                       
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
     glfwTerminate();
-
-    delete mainMenuPage;
 
     return 0;
 }

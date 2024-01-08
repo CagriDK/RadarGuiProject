@@ -42,7 +42,6 @@ public:
 
     ~GuiManager() {
         for (auto& pair : m_Pages) {
-            pair.second->Terminate();
             delete pair.second;
         }
     }

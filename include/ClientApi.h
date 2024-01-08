@@ -11,7 +11,8 @@ public:
     bool sendJsonMessage(json data, std::string messageName);
     bool getConnectionStatus() const;
 
+public:
+    bool thread_running;
 private:
     std::mutex m_mtx;
-
 };

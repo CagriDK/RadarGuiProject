@@ -5,10 +5,12 @@ include(CTest)
 enable_testing()
 
 # Create a list of source files
-file(GLOB_RECURSE CPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
+file(GLOB_RECURSE CPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE CPP_GUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/GUI/src/*.cpp)
 file(GLOB_RECURSE IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/src/imGui/*.cpp)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/GUI/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Dependencies/include/imGui)
 
@@ -18,7 +20,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 set(Boost_USE_STATIC_LIBS ON)
 
 
-add_executable(RadarGuiProject main.cpp ${CPP_SOURCES} ${IMGUI_SOURCES})
+add_executable(RadarGuiProject main.cpp ${CPP_SOURCES} ${IMGUI_SOURCES} ${CPP_GUI_SOURCES})
 
 # Add the path to the GLFW library
 #libglfw3.a OpenGL libs

@@ -13,7 +13,6 @@ public:
     void Init() override;
     void Update() override;
     void Render() override;
-    void Terminate() override;
     bool ShouldClose() override;
 
 private:

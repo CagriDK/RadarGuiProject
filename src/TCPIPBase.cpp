@@ -1,4 +1,4 @@
-#include "../include/TCPIPBase.h"
+#include "TCPIPBase.h"
 
 TCPIPBase::TCPIPBase() : m_connectionStatus(false) , m_socket(nullptr)
 {
@@ -7,6 +7,7 @@ TCPIPBase::TCPIPBase() : m_connectionStatus(false) , m_socket(nullptr)
 
 TCPIPBase::~TCPIPBase()
 {
+
     if (m_socket != nullptr)
     {
         if(m_socket->is_open())

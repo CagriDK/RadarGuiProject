@@ -1,15 +1,16 @@
-#include "../include/ClientApi.h"
+#include "ClientApi.h"
 
 #define MAX_NO_DATA_COUNT 100
 
 ClientApi::ClientApi(const std::string &ipAddr, const uint16_t port) : TCPClient(ipAddr, port)
 {
-
+    thread_running = true;
 }
 
 ClientApi::~ClientApi()
 {
-
+    thread_running = false;
+    m_connectionStatus = false;
 }
 
 bool ClientApi::sendJsonMessage(json data, std::string messageName)

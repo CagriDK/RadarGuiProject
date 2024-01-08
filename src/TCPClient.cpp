@@ -1,4 +1,4 @@
-#include "../include/TCPClient.h"
+#include "TCPClient.h"
 
 TCPClient::TCPClient(const std::string &ipAddr, const uint16_t port) : TCPIPBase()
 {
@@ -8,6 +8,13 @@ TCPClient::TCPClient(const std::string &ipAddr, const uint16_t port) : TCPIPBase
 
 TCPClient::~TCPClient()
 {
+    if (m_socket != nullptr)
+    {
+        m_socket->close();
+        delete m_socket;
+        m_socket = nullptr;
+    }
+
     if (m_endpoint != nullptr)
     {
         delete m_endpoint;

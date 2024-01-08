@@ -6,24 +6,31 @@ RadarMenuPage::RadarMenuPage()
 
 RadarMenuPage::~RadarMenuPage()
 {
+    clntApi->m_connectionStatus = false;
+    clntApi->thread_running = false;
+    m_thread->join();
+    delete clntApi;
+    delete m_thread;
 }
 
 void RadarMenuPage::Init()
 {
-    Config &config = Config::getInstance();
-    m_serverPort = config.getServerPort();
-    int i = 0;
-    for (auto idx : config.getUDPRadarIPPort())
+    try
     {
-        // Config::UDPIPPort temp;
-        // memcpy(&temp, &idx, sizeof(Config::UDPIPPort));
-        m_udp_addres.push_back(idx);
-    }
+        Config &config = Config::getInstance();
+        m_serverPort = config.getServerPort();
+        int i = 0;
+        for (auto idx : config.getUDPRadarIPPort())
+        {
+            // Config::UDPIPPort temp;
+            // memcpy(&temp, &idx, sizeof(Config::UDPIPPort));
+            m_udp_addres.push_back(idx);
+        }
 
-    clntApi = new ClientApi("127.0.0.1", 55000);
-    m_thread = new std::thread([this]()
-                               {
-            while (true)
+        clntApi = new ClientApi("127.0.0.1", 55000);
+        m_thread = new std::thread([this]()
+                                   {
+            while (clntApi->thread_running)
             {
                 if (clntApi->getConnectionStatus())
                 {
@@ -35,10 +42,22 @@ void RadarMenuPage::Init()
                 {
                     std::cout << "Waiting for connection"
                               << "\n";
-                    clntApi->ConnectServer();
+                    if (clntApi)
+                    {
+                        clntApi->ConnectServer();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
             } });
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
 void RadarMenuPage::Update()
@@ -115,11 +134,6 @@ void RadarMenuPage::Render()
         }
     }
     ImGui::End();
-}
-
-void RadarMenuPage::Terminate()
-{
-    m_thread->join();
 }
 
 bool RadarMenuPage::ShouldClose()
