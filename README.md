@@ -30,7 +30,7 @@ In case it doesn't appears
 https://www.dll-files.com/opengl32.dll.html
 
 ### LINUX BUILD
-ssssss
+
 sudo apt-get install cmake
 sudo apt-get install libglfw3-dev
 sudo apt-get install libgl1-mesa-dev
