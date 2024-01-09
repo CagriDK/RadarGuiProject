@@ -8,7 +8,7 @@ public:
     ClientApi(const std::string &ipAddr, const uint16_t port);
     ~ClientApi();
 
-    bool sendJsonMessage(json data, std::string messageName);
+    bool sendJsonMessage(json data);
     bool getConnectionStatus() const;
 
 public:

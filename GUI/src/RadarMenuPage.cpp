@@ -27,7 +27,7 @@ void RadarMenuPage::Init()
             m_udp_addres.push_back(idx);
         }
 
-        clntApi = new ClientApi("127.0.0.1", 55000);
+        clntApi = new ClientApi("127.0.0.1", config.getGuiPort());
         m_thread = new std::thread([this]()
                                    {
             while (clntApi->thread_running)
@@ -122,7 +122,18 @@ void RadarMenuPage::Render()
                 if (ImGui::Button("Send", buttonSize))
                 {
                     json jData;
-                    clntApi->sendJsonMessage(jData, "RadarMessage");
+                    jData["ip"] = m_udp_addres[i].ip;
+                    jData["port"] = m_udp_addres[i].port;
+                    jData["trackPlot"] = m_udp_addres[i].trackPlot;
+                    jData["radarPlot"] = m_udp_addres[i].radarPlot;
+                    jData["multiInstance"] = m_udp_addres[i].multiInstance;
+
+                    json jHeader; 
+                    jHeader["MessageType"] = 1;
+                    jHeader["MessageSize"] = jData.dump().size();
+
+                    clntApi->sendJsonMessage(jHeader);
+                    clntApi->sendJsonMessage(jData);
                 }
                 ImGui::EndGroup();
 

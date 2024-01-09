@@ -13,17 +13,12 @@ ClientApi::~ClientApi()
     m_connectionStatus = false;
 }
 
-bool ClientApi::sendJsonMessage(json data, std::string messageName)
+bool ClientApi::sendJsonMessage(json data)
 {
     if(getConnectionStatus())
     {
         std::unique_lock<std::mutex> lck(m_mtx);
-        json jD;
-        jD["senderID"] = 3;
-        jD["receiverID"] = 1;
-        jD["messageName"] = messageName;
-        jD["payload"] = data;
-        auto saveData = jD.dump();
+        auto saveData = data.dump();
         auto wLen = boost::asio::write(*m_socket, boost::asio::buffer(saveData, static_cast<int>(saveData.length())));
         return (wLen > 0);
     }

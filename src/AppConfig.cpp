@@ -45,6 +45,7 @@ bool Config::parseFile(json jData)
 {
     bool checkVal = true;
     checkVal &= checkControlAndSet(m_serverPort, jData, "ServerPort",false);
+    checkVal &= checkControlAndSet(m_GuiPort, jData, "RadarControlGuiPort",false);
     checkVal &= checkControlAndSetArray(m_udp_addres, jData, "RadarUDPAdresses", "ip", "port");
     return checkVal;
 }
