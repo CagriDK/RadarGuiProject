@@ -1,5 +1,5 @@
 # RadarGuiProject
-Crate Radars and Manage the Data Packages.
+Create Virtual Radar Objects and Manage the Radar Data Packages.
 
 ## Prerequisites WINDOWS BUILD
 
@@ -79,4 +79,8 @@ This is an example of how to list things you need to use the software and how to
    sudo apt-get install libglfw3-dev
    sudo apt-get install libgl1-mesa-dev
    sudo apt-get install mesa-utils
-   ```
+
+## Contribute
+
+Contributions are always welcome!
+Please reach me [contact-addres](https://www.linkedin.com/in/%C3%A7a%C4%9Fr%C4%B1-d%C3%BCk%C3%BCnl%C3%BC-msc-a47b83131/) first.
